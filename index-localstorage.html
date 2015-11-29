@@ -2,73 +2,86 @@
 <html>
 
 <head>
-    <title></title>
-    <style data-fonts-URI="/fonts.css"></style>
+    <style data-fonts-URI="/fonts.6f083b7d3011281f40bebbd9527fda43.css">
+        /* placeholder for the font CSS to go in. */
+    </style>
+
     <script>
-    (function (document, window) {
-        var fonts = document.querySelector('[data-fonts-URI]'),
-            href = fonts.getAttribute('data-fonts-URI');
+        // This script is blocking, but it means that if we have the fonts locally,
+        // we can inject them before any other CSS is parsed, so that the injection
+        // of the font CSS doesn't trigger a 2nd paint.
+        //
+        // If we need to download them, we'll just have to re-paint when (if) they
+        // arrive.
+        (function (document, window) {
+            var fonts = document.querySelector('[data-fonts-URI]'),
+                href = fonts.getAttribute('data-fonts-URI');
 
-        function injectCSS (css) {
-            fonts.innerHTML = css;
-        };
-
-        function getCSS () {
-            try {
-                return window.localStorage.getItem(href);
-            } catch (e) {};
-            return null;
-        }
-
-        function setCSS (css) {
-            try {
-                window.localStorage.setItem(href, css);
-            } catch (e) {};
-        }
-
-        var css = getCSS();
-
-        if (!!css) {
-            injectCSS(css);
-        } else {
-            var fetchCSS = new XMLHttpRequest();
-            fetchCSS.onreadystatechange = function () {
-                if (fetchCSS.readyState === 4 && fetchCSS.status === 200) {
-                    var css = fetchCSS.responseText;
-                    injectCSS(css);
-                    setCSS(css);
-                }
+            function injectCSS (css) {
+                fonts.innerHTML = css;
             };
-            fetchCSS.open("GET", href);
-            fetchCSS.send();
-        }
-    })(document, window);
+
+            function getCSS () {
+                try { // localStorage isn't always available, even when supported
+                    return window.localStorage.getItem(href);
+                } catch (e) {};
+                return false;
+            }
+
+            function setCSS (css) {
+                try { // localStorage isn't always available, even when supported
+                    window.localStorage.setItem(href, css);
+                } catch (e) {};
+            }
+
+            var css = getCSS();
+
+            if (!!css) {
+                // if we have the font CSS stored locally, just inject it
+                injectCSS(css);
+            } else {
+                // we don't, so ajax it in
+                var fetchCSS = new XMLHttpRequest();
+                fetchCSS.onreadystatechange = function () {
+                    if (fetchCSS.readyState === 4 && fetchCSS.status === 200) {
+                        var css = fetchCSS.responseText;
+                        // now we've downloaded it, inject it, then save it
+                        injectCSS(css);
+                        setCSS(css);
+                    }
+                };
+                fetchCSS.open("GET", href);
+                fetchCSS.send();
+            }
+        })(document, window);
     </script>
+
     <style>
-    body {
-        font-family: "Guardian Text Egyptian Web", Georgia;
-        font-size: 2rem;
-    }
+        body {
+            font-family: "Guardian Text Egyptian Web", Georgia;
+            font-style: normal;
+            font-size: 2rem;
+        }
 
-    .thin {
-        font-weight: 200;
-    }
+        .thin {
+            font-weight: 200;
+        }
 
-    .light {
-        font-weight: 400;
-    }
+        .light {
+            font-weight: 400;
+        }
 
-    .regular {
-        font-weight: 500;
-    }
+        .regular {
+            font-weight: 500;
+        }
 
-    .bold {
-        font-weight: 900;
-    }
+        .bold {
+            font-weight: 900;
+        }
 
-    .italic {
-        font-style: italic;
-    }
+        .italic {
+            font-style: italic;
+        }
     </style>
 </head>
 

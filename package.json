@@ -3,6 +3,7 @@
     "browser-sync": "^2.10.0",
     "chalk": "^1.1.1",
     "gzip-size": "^3.0.0",
-    "pretty-bytes": "^2.0.1"
+    "pretty-bytes": "^2.0.1",
+    "replace": "^0.3.0"
   }
 }
