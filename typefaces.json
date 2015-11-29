@@ -1,0 +1,71 @@
+[{
+    "family": "Guardian Text Egyptian Web",
+    "fonts": [{
+        "file": "GuardianTextEgyptianWeb-Black.woff",
+        "weight": 900,
+        "style": "normal"
+    }, {
+        "file": "GuardianTextEgyptianWeb-BlackItalic.woff",
+        "weight": 900,
+        "style": "italic"
+    }, {
+        "file": "GuardianTextEgyptianWeb-Bold.woff",
+        "weight": 500,
+        "style": "normal"
+    }, {
+        "file": "GuardianTextEgyptianWeb-BoldItalic.woff",
+        "weight": 500,
+        "style": "italic"
+    }, {
+        "file": "GuardianTextEgyptianWeb-Medium.woff",
+        "weight": 400,
+        "style": "normal"
+    }, {
+        "file": "GuardianTextEgyptianWeb-MediumItalic.woff",
+        "weight": 400,
+        "style": "italic"
+    }, {
+        "file": "GuardianTextEgyptianWeb-Regular.woff",
+        "weight": 200,
+        "style": "normal"
+    }, {
+        "file": "GuardianTextEgyptianWeb-RegularItalic.woff",
+        "weight": 200,
+        "style": "italic"
+    }]
+}, {
+    "family": "Guardian Egyptian Web",
+    "fonts": [{
+        "file": "GuardianEgyptianWeb-Bold.woff",
+        "weight": 900,
+        "style": "normal"
+    }, {
+        "file": "GuardianEgyptianWeb-BoldItalic.woff",
+        "weight": 900,
+        "style": "italic"
+    }, {
+        "file": "GuardianEgyptianWeb-Semibold.woff",
+        "weight": 500,
+        "style": "normal"
+    }, {
+        "file": "GuardianEgyptianWeb-SemiboldItalic.woff",
+        "weight": 500,
+        "style": "italic"
+    }, {
+        "file": "GuardianEgyptianWeb-Medium.woff",
+        "weight": 400,
+        "style": "normal"
+    }, {
+        "file": "GuardianEgyptianWeb-Regular.woff",
+        "weight": 200,
+        "style": "normal"
+    }, {
+        "file": "GuardianEgyptianWeb-RegularItalic.woff",
+        "weight": 200,
+        "style": "italic"
+    }, {
+        "file": "GuardianEgyptianWeb-Light.woff",
+        "weight": 200,
+        "style": "normal"
+    }]
+}]
