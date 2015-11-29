@@ -5,6 +5,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const cssFile = 'fonts.css';
+const mainfestFile = 'manifest.appcache';
 
 const fontFaceTemplate = (family, weight, style, data) => `@font-face {
     font-family: "${family}";
@@ -13,11 +14,14 @@ const fontFaceTemplate = (family, weight, style, data) => `@font-face {
     font-style: "${style}";
 }`;
 
-const appCacheTemplate = (cssHash) => `CACHE MANIFEST
+const manifestTemplate = (cssHash) => `CACHE MANIFEST
 # ${cssHash}
 
 CACHE:
-/${cssFile}`;
+/${cssFile}
+
+NETWORK:
+*`;
 
 const sizeTemplate = (string) => `${chalk.blue(require('pretty-bytes')(require('gzip-size').sync(string)))} ${chalk.grey('(gzip)')}`
 
@@ -47,7 +51,7 @@ fs.writeFile(cssFile, css, 'utf-8', err => {
 });
 
 // generate the manifest
-fs.writeFile('gu.appcache', appCacheTemplate(require('crypto').createHash('md5').update(css).digest('hex')), 'utf-8', err => {
+fs.writeFile(mainfestFile, manifestTemplate(require('crypto').createHash('md5').update(css).digest('hex')), 'utf-8', err => {
     if (err) {
         console.log('error writing manifest', err);
     }
