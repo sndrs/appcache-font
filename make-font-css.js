@@ -22,7 +22,7 @@ CACHE:
 NETWORK:
 *`;
 
-const sizeTemplate = (string) => `${chalk.blue(require('pretty-bytes')(require('gzip-size').sync(string)))} ${chalk.grey('(gzip)')}`
+const sizeTemplate = (string) => `${chalk.blue(require('pretty-bytes')(require('gzip-size').sync(string)))} ${chalk.grey('(gzip)')}`;
 
 // generate the CSS file
 const css = require('./typefaces.json').map(typeface => {
@@ -40,9 +40,12 @@ const css = require('./typefaces.json').map(typeface => {
         console.log(`${typeface.family} (${font.weight}, ${font.style}): ${sizeTemplate(css)}`);
         return css;
     }).join('\n');
-    console.log(`${typeface.family} (${typeface.fonts.length} variants): ${sizeTemplate(css)}`);
+    console.log(`${chalk.green(typeface.family)} (${typeface.fonts.length} variants): ${sizeTemplate(css)}\n`);
     return css;
 }).join('\n');
+
+console.log(`Total: ${sizeTemplate(css)}
+`);
 
 const cssHash = require('crypto').createHash('md5').update(css).digest('hex');
 
@@ -60,11 +63,12 @@ fs.writeFile(mainfestFile, manifestTemplate(cssHash), 'utf-8', err => {
     }
 });
 
-require("replace")({
-    regex: '<style data-fonts-URI="/fonts.*\.css">',
-    replacement: `<style data-fonts-URI="/fonts.${cssHash}.css">`,
-    paths: ["./index-localstorage.html"]
-  })
+// use the new files
+require('replace-in-file')({
+    files: ['index-appcache.html', 'index-localstorage.html'],
+    replace: /fonts\.*([a-z0-9]{32,})?\.css/g,
+    with: `fonts.${cssHash}.css`
+}, () => {});
 
-console.log(`Total: ${sizeTemplate(css)}
-`)
+// tidy up
+require('del').sync([cssFile('*'), `!${cssFile(cssHash)}`])
